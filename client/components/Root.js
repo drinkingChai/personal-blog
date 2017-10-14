@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Route } from 'react-router-dom'
 import store, { fetchBlogs, fetchUser } from '../store'
 
 import Nav from './Nav'
@@ -14,7 +15,7 @@ export default class Root extends Component {
   render() {
     return (
       <div>
-        <Nav />
+        <Route component={ Nav }/>
         <Routes />
       </div>
     )

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { connect } from 'react-redux'
 
@@ -7,7 +8,10 @@ const Blogs = ({ blogs }) => {
     <div>
       {
         blogs.map(blog => (
-          <ReactMarkdown key={ blog.id } source={ blog.content }/>))
+          <div key={ blog.id }>
+            <ReactMarkdown source={ blog.content }/>
+            <Link to={ `/blogs/${blog.id}` }>Read more</Link>
+          </div>))
       }
     </div>
   )
