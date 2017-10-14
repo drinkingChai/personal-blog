@@ -7,4 +7,28 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
+router.post('/', (req, res, next) => {
+  Blog.create(req.body)
+    .then(() => res.sendStatus(202))
+    .catch(next)
+})
+
+router.put('/:id', (req, res, next) => {
+  Blog.findById(req.params.body)
+    .then(blog => {
+      Object.assign(blog, { ...req.body })
+      blog.save()
+    })
+    .then(() => res.sendStatus(200))
+    .catch(next)
+})
+
+router.delete('/:id', (req, res, next) => {
+  Blog.findById(req.params.body)
+    .then(blog => blog.destroy())
+    .then(() => res.sendStatus(200))
+    .catch(next)
+})
+
+
 module.exports = router
