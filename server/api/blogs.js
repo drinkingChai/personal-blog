@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const { requireLogin } = require('./middlewares/session-middleware')
 const { Blog } = require('../db').models
 
 router.get('/', (req, res, next) => {
@@ -7,14 +8,14 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
-router.post('/', (req, res, next) => {
-  Blog.create(req.body)
+router.post('/', requireLogin, (req, res, next) => {
+  Blog.create({ ...req.body, userId: req.session.userId })
     .then(blog => res.status(201).send(blog))
     .catch(next)
 })
 
-router.put('/:id', (req, res, next) => {
-  Blog.findById(req.params.id)
+router.put('/:id', requireLogin, (req, res, next) => {
+  Blog.findOne({ where: { id: req.params.id, userId: req.session.userId } })
     .then(blog => {
       Object.assign(blog, { ...req.body })
       blog.save()
@@ -23,8 +24,8 @@ router.put('/:id', (req, res, next) => {
     .catch(next)
 })
 
-router.delete('/:id', (req, res, next) => {
-  Blog.findById(req.params.id)
+router.delete('/:id', requireLogin, (req, res, next) => {
+  Blog.findOne({ where: { id: req.params.id, userId: req.session.userId } })
     .then(blog => blog.destroy())
     .then(() => res.sendStatus(200))
     .catch(next)
