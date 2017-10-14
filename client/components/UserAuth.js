@@ -24,6 +24,7 @@ class UserAuth extends Component {
   onLoginHandler(ev) {
     ev.preventDefault()
     this.props.logIn(this.state)
+      .then(() => this.props.history.push('/'))
   }
 
   onLogoutHandler(ev) {
@@ -37,21 +38,26 @@ class UserAuth extends Component {
     const { onChangeHandler, onLoginHandler, onLogoutHandler } = this
 
     return (
-      <form onSubmit={ onLoginHandler }>
-        <div>
-          <label htmlFor='email'>Email</label>
-          <input name='email' type='email' onChange={ onChangeHandler }/>
-        </div>
-
-        <div>
-          <label htmlFor='password'>Password</label>
-          <input name='password' type='password' onChange={ onChangeHandler }/>
-        </div>
-
+      <div>
         { currentUser.id ?
-            <button onClick={ onLogoutHandler }>Log out</button> :
-            <button>Log in</button> }
-      </form>
+            <form onSubmit={ onLogoutHandler }>
+              <button onClick={ onLogoutHandler }>Log out</button>
+            </form>
+            :
+            <form onSubmit={ onLoginHandler }>
+              <div>
+                <label htmlFor='email'>Email</label>
+                <input name='email' type='email' onChange={ onChangeHandler }/>
+              </div>
+
+              <div>
+                <label htmlFor='password'>Password</label>
+                <input name='password' type='password' onChange={ onChangeHandler }/>
+              </div>
+
+              <button>Log in</button>
+            </form> }
+      </div>
     )
   }
 }

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import store, { fetchBlogs, fetchUser } from '../store'
-import PostBlog from './PostBlog'
-import Blogs from './Blogs'
-import UserAuth from './UserAuth'
+
+import Nav from './Nav'
+import Routes from './Routes'
 
 export default class Root extends Component {
   componentDidMount() {
@@ -14,10 +14,8 @@ export default class Root extends Component {
   render() {
     return (
       <div>
-        <PostBlog /> 
-        <Blogs />
-        <UserAuth />
-      
+        <Nav />
+        <Routes />
       </div>
     )
   }
