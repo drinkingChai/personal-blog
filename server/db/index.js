@@ -11,6 +11,7 @@ const sync = () => conn.sync()
 module.exports = {
   sync,
   models: {
-    Blog
+    Blog,
+    User
   }
 }
