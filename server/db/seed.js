@@ -6,8 +6,12 @@ const seed = () => {
     .then(() => {
       return Promise.all([
         Blog.create({ title: 'test blog', content: 'lotta stuff' }),
-        User.create({ name: 'hello', email: 'foo@foo.com', password: 'a' })
+        User.create({ name: 'hello', email: 'foo@foo.com', password: 'a' }),
+        User.create({ name: 'hello', email: 'bar@bar.com', password: 'a' })
       ])
+    })
+    .then(([ blog, user ]) => {
+      return user.addBlog(blog)
     })
 }
 
