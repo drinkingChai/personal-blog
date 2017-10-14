@@ -9,7 +9,7 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   Blog.create(req.body)
-    .then(() => res.sendStatus(201))
+    .then(blog => res.status(201).send(blog))
     .catch(next)
 })
 
@@ -19,7 +19,7 @@ router.put('/:id', (req, res, next) => {
       Object.assign(blog, { ...req.body })
       blog.save()
     })
-    .then(() => res.sendStatus(200))
+    .then(blog => res.status(200).send(blog))
     .catch(next)
 })
 

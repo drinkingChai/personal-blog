@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import ReactMarkdown from 'react-markdown'
+import { connect } from 'react-redux'
+import { postBlog } from '../store'
 
-export default class PostBlog extends Component {
+class PostBlog extends Component {
   constructor() {
     super()
     this.state = {
@@ -21,6 +23,7 @@ export default class PostBlog extends Component {
 
   onSubmitHandler(ev) {
     ev.preventDefault()
+    this.props.postBlog(this.state)
   }
 
   render() {
@@ -46,3 +49,7 @@ export default class PostBlog extends Component {
     )
   }
 }
+
+const mapDispatch = { postBlog }
+
+export default connect(null, mapDispatch)(PostBlog)
