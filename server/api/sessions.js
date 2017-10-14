@@ -5,8 +5,9 @@ router.get('/', (req, res, next) => {
   User.findById(req.session.userId, { include: [ Blog ] })
     .then(user => {
       if (!user) return res.sendStatus(401)
-      const { email, name, blogs } = user
+      const { id, email, name, blogs } = user
       res.send({
+        id,
         email,
         name,
         blogs
