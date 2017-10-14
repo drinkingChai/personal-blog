@@ -9,12 +9,12 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   Blog.create(req.body)
-    .then(() => res.sendStatus(202))
+    .then(() => res.sendStatus(201))
     .catch(next)
 })
 
 router.put('/:id', (req, res, next) => {
-  Blog.findById(req.params.body)
+  Blog.findById(req.params.id)
     .then(blog => {
       Object.assign(blog, { ...req.body })
       blog.save()
@@ -24,7 +24,7 @@ router.put('/:id', (req, res, next) => {
 })
 
 router.delete('/:id', (req, res, next) => {
-  Blog.findById(req.params.body)
+  Blog.findById(req.params.id)
     .then(blog => blog.destroy())
     .then(() => res.sendStatus(200))
     .catch(next)
