@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import PostBlog from './PostBlog'
 import store, { fetchBlogs } from '../store'
+import PostBlog from './PostBlog'
+import Blogs from './Blogs'
 
 export default class Root extends Component {
   componentDidMount() {
@@ -11,7 +12,7 @@ export default class Root extends Component {
     return (
       <div>
         <PostBlog /> 
-      
+        <Blogs />
       
       </div>
     )
