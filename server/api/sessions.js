@@ -1,9 +1,18 @@
 const router = require('express').Router()
-const { User } = require('../db').models
+const { User, Blog } = require('../db').models
 
 router.get('/', (req, res, next) => {
-  // active route for testing?
-  res.send(req.session)
+  User.findById(req.session.userId, { include: [ Blog ] })
+    .then(user => {
+      if (!user) return res.sendStatus(401)
+      const { email, name, blogs } = user
+      res.send({
+        email,
+        name,
+        blogs
+      })
+    })
+    .catch(next)
 })
 
 router.post('/', (req, res, next) => {
