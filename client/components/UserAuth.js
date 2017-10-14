@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { logIn } from '../store'
+import { logIn, logOut } from '../store'
 
 class UserAuth extends Component {
   constructor() {
@@ -10,7 +10,8 @@ class UserAuth extends Component {
       password: ''
     }
     this.onChangeHandler = this.onChangeHandler.bind(this)
-    this.onSubmitHandler = this.onSubmitHandler.bind(this)
+    this.onLoginHandler = this.onLoginHandler.bind(this)
+    this.onLogoutHandler = this.onLogoutHandler.bind(this)
   }
 
   onChangeHandler(ev) {
@@ -20,17 +21,23 @@ class UserAuth extends Component {
     this.setState(nextState)
   }
 
-  onSubmitHandler(ev) {
+  onLoginHandler(ev) {
     ev.preventDefault()
     this.props.logIn(this.state)
   }
 
+  onLogoutHandler(ev) {
+    ev.preventDefault()
+    this.props.logOut()
+  }
+
   render() {
+    const { currentUser } = this.props
     const { email, password } = this.state
-    const { onChangeHandler, onSubmitHandler } = this
+    const { onChangeHandler, onLoginHandler, onLogoutHandler } = this
 
     return (
-      <form onSubmit={ onSubmitHandler }>
+      <form onSubmit={ onLoginHandler }>
         <div>
           <label htmlFor='email'>Email</label>
           <input name='email' type='email' onChange={ onChangeHandler }/>
@@ -41,12 +48,15 @@ class UserAuth extends Component {
           <input name='password' type='password' onChange={ onChangeHandler }/>
         </div>
 
-        <button>Submit</button>
+        { currentUser.id ?
+            <button onClick={ onLogoutHandler }>Log out</button> :
+            <button>Log in</button> }
       </form>
     )
   }
 }
 
-const mapDispatch = { logIn }
+const mapState = ({ currentUser }) => ({ currentUser })
+const mapDispatch = { logIn, logOut }
 
-export default connect(null, mapDispatch)(UserAuth)
+export default connect(mapState, mapDispatch)(UserAuth)

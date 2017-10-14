@@ -7,11 +7,13 @@ import axios from 'axios'
 const GET_BLOGS = 'GET_BLOGS'
 const ADD_BLOG = 'ADD_BLOG'
 const GET_USER = 'GET_USER'
+const LOG_OUT_USER = 'LOG_OUT_USER'
 
 // ACTION CREATORS
 const getBlogs = blogs => ({ type: GET_BLOGS, blogs })
 const addBlog = blog => ({ type: ADD_BLOG, blog })
 const getUser = user => ({ type: GET_USER, user })
+const logOutUser = user => ({ type: LOG_OUT_USER })
 
 // THUNK
 export const fetchBlogs = () => dispatch =>
@@ -25,6 +27,10 @@ export const postBlog = blogData => dispatch =>
 export const logIn = (authInfo) => dispatch =>
   axios.post('/api/sessions', authInfo)
     .then(() => dispatch(fetchUser()))
+
+export const logOut = () => dispatch =>
+  axios.delete('/api/sessions')
+    .then(() => dispatch(logOutUser()))
 
 export const fetchUser = () => dispatch =>
   axios.get('/api/sessions')
@@ -45,6 +51,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, blogs: [ ...state.blogs, action.blog ] }
     case GET_USER:
       return { ...state, currentUser: action.user }
+    case LOG_OUT_USER:
+      return { ...state, currentUser: {} }
     default:
       return state
   }
