@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import store, { fetchBlogs } from '../store'
 import PostBlog from './PostBlog'
 import Blogs from './Blogs'
+import UserAuth from './UserAuth'
 
 export default class Root extends Component {
   componentDidMount() {
@@ -13,6 +14,7 @@ export default class Root extends Component {
       <div>
         <PostBlog /> 
         <Blogs />
+        <UserAuth />
       
       </div>
     )
